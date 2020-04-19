@@ -1,0 +1,152 @@
+#Server
+server:
+  port: 1023
+  tomcat:
+    uri-encoding: utf-8
+    basedir: tmp
+spring:
+  datasource:
+    druid:
+      # 数据库连接1
+      datasource1:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1/datasource_1?autoReconnect=true&roundRobinLoadBalance=true&useUnicode=yes&characterEncoding=utf8&connectionCollation=utf8_general_ci&serverTimezone=GMT%2B8
+        username: root
+        password: 
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      
+      # 数据库连接2
+      datasource2:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1/datasource_2?autoReconnect=true&roundRobinLoadBalance=true&useUnicode=yes&characterEncoding=utf8&connectionCollation=utf8_general_ci&serverTimezone=GMT%2B8
+        username: root
+        password: 
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      
+      # # 数据库连接3
+      datasource3:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1/datasource_3?useUnicode=yes&characterEncoding=utf8&connectionCollation=utf8_general_ci&serverTimezone=GMT%2B8
+        username: root
+        password: 
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+      # druid 监控配置
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: 123456
+        reset-enable: false
+        url-pattern: /druid/*
+      web-stat-filter:
+        enabled: true
+        # 添加过滤规则
+        url-pattern: /*
+        # 忽略过滤格式
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+  jpa:
+    database: MYSQL
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      ddl-auto: none
+      naming:
+        # 表名及字段全小写下划线分隔命名策略(默认)
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show_sql: true
+    generate-ddl: false
+    open-in-view: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  # 热部署配置
+  devtools:
+    restart:
+      exclude: WEB-INF/**
+      enabled: false
+      additional-paths: src/main/java
+  main:
+    allow-bean-definition-overriding: true
+  output:
+    ansi:
+      enabled: detect
+      
+# 自定义日志配置文件名称
+logging:
+  config: classpath:logback-dev.xml
+
+redis:
+  server: 10.8.0.13,10.8.0.13,10.8.0.13
+  port: 26379,26380,26381
+  sentinelname: mymaster
+  passsword: 123456
+  timeout: 12000
+  db: 1
+  pool:
+    maxTotal: 200
+    maxIdle: 150
+    minIdle: 50
+    testWhileIdle: true
+    testOnBorrow: true
+    testOnReturn: true
+    maxWaitMillis: 10000
+    timeBetweenEvictionRunsMillis: 30000
+    numTestsPerEvictionRun: 50
+    minEvictableIdleTimeMillis: 60000
