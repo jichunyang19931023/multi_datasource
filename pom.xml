@@ -22,7 +22,7 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <knife4j-spring-boot-starter.version>2.0.1</knife4j-spring-boot-starter.version>
-        <jackson-databind.version>2.9.9</jackson-databind.version>
+        <jackson-databind.version>2.9.10.8</jackson-databind.version>
         <fastjson.version>1.2.67</fastjson.version>
 
     </properties>
